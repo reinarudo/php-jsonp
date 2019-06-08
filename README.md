@@ -1,1 +1,1 @@
-# php-jsonp
+# JSONP implementation using PHP

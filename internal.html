@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+
+You should look to use CORS where possible 
+(i.e. your server or API supports it, and the browser support is adequate), 
+as JSONP has inherent security risks.
+
+source: https://stackoverflow.com/questions/3839966/can-anyone-explain-what-jsonp-is-in-layman-terms
+-->
+<html lang="en">
+<head>
+    <title>JSONP Demo</title>
+    <script>
+        window.onload = function() {
+            var num = Math.round(10000 * Math.random());
+            var callbackMethodName = "myfunction_" + num;
+            window[callbackMethodName] = function(data) {
+                console.log(data);
+            }
+
+
+            /*
+                imagine that the script tag created below has a source from a 
+                different server.
+                Sometimes, the browser puts them in a cache, so we pass a parameter  
+                in query string with a token.
+            */
+            var sc = document.createElement("script");
+            sc.id = "script_" + callbackMethodName;
+            sc.src = "external.php?callback=" + callbackMethodName;
+
+            document.body.appendChild(sc);
+            document.getElementById(sc.id).remove(); //remove once used
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
